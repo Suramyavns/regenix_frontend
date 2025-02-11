@@ -20,7 +20,7 @@ export default function Page() {
   },[])
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <GridLoader color="white"/>
+      <GridLoader color="gray"/>
     </div>
   );
 }
