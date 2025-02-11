@@ -1,5 +1,5 @@
 'use client'
-import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { auth } from '../../../Firebase';
@@ -30,8 +30,9 @@ const SignupForm = () => {
                 throw new Error('Passwords do not match');
             }
 
-            const userCreds = await createUserWithEmailAndPassword(auth, email, password);
-            if (userCreds.user) {
+            const registered = await createUserWithEmailAndPassword(auth, email, password);
+            const loggedin = await signInWithEmailAndPassword(auth,email,password)
+            if (registered.user && loggedin.user) {
                 router.replace('/');
             }
         } catch (error) {
