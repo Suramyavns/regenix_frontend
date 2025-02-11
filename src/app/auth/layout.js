@@ -1,3 +1,7 @@
+export const metadata = {
+    title:'Auth'
+}
+
 export default function Layout({children}) {
     return (
         <section className="h-fit flex flex-col justify-center gap-6 py-6">
