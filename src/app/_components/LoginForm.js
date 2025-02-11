@@ -76,7 +76,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div className='flex justify-center items-center flex-col p-10 gap-4 w-5/6 sm:w-1/3 h-fit shadow-box rounded-3xl'>
+        <div className='flex justify-center items-center flex-col p-10 gap-4 w-5/6 sm:w-1/2 xl:1/3 h-fit shadow-box rounded-3xl'>
             {loading ? (
                 <div className="flex justify-center items-center">
                     <GridLoader color='white' />
