@@ -22,7 +22,7 @@ export const TaskSuggestion = () => {
                 suggestion:suggestion.content,
                 date:new Date().getDate()
             }
-            localStorage.setItem('suggestion',todaysSuggestion)
+            localStorage.setItem('suggestion',JSON.stringify(todaysSuggestion))
         }
         setLoading(false);
     }
