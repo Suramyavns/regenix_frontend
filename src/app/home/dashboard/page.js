@@ -4,6 +4,10 @@ import { auth } from "../../../../Firebase";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { GridLoader } from "react-spinners";
+import WeatherBoard from "@/app/_components/WeatherBoard";
+import UserScore from "@/app/_components/UserScore";
+import AQIBoard from "@/app/_components/AQIBoard";
+
 export default function Page() {
     const router = useRouter()
     const [loading,setLoading]=useState(true);
@@ -17,7 +21,7 @@ export default function Page() {
     }
 
     useEffect(()=>{
-        const user = auth.currentUser
+        const user = JSON.parse(localStorage.getItem('user'))||auth.currentUser
         if(user){
             setUser(user);
             setLoading(false);
@@ -25,15 +29,20 @@ export default function Page() {
     },[])
 
     return (
-        <div className="h-full flex flex-col justify-center items-center">
+        <div className="h-full w-full flex flex-col justify-center items-center">
             {
                 loading?
                 <GridLoader color="gray" />
                 :
-                <>
-                wilkommen {user?.displayName || user?.email}
-                <button onClick={handleLogout} className="w-4/5 text-2xl p-2 bg-gray-700 rounded-xl">Logout</button>
-                </>
+                <div className="h-full py-4 gap-6 flex flex-col w-11/12 items-center">
+                    <WeatherBoard />
+                    <div className="w-full flex justify-around">
+                        <UserScore />
+                        <AQIBoard />
+                    </div>
+                    <p>wilkommen {user?.displayName.toString() || user?.email.toString()}</p>
+                    <button onClick={handleLogout} className="w-4/5 text-2xl p-2 bg-gray-700 rounded-xl">Logout</button>
+                </div>
             }
         </div>
     );

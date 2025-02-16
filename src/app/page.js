@@ -6,10 +6,9 @@ import { GridLoader } from "react-spinners";
 
 export default function Page() {
   const router = useRouter();
-  const [user,setUser]=useState(null)
   useEffect(()=>{
     auth.onAuthStateChanged((user)=>{
-      setUser(user)
+      localStorage.setItem('user',JSON.stringify(user))
       if(user){
         router.replace('/home/dashboard')
       }

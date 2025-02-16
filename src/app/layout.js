@@ -1,4 +1,4 @@
-import { Provider } from "@/components/ui/provider";
+import { auth } from "../../Firebase";
 import "./globals.css";
 
 export const metadata = {

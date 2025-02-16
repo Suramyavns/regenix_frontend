@@ -11,10 +11,10 @@ export default function Header(){
     useEffect(() => {
         const user = auth.currentUser;
         if(user){
-            setUser(user);
+            setUser(user);            
             setLoading(false);
         }
-        else{redirect('/')}
+        else{redirect('/')}        
     },[])
     return(
         <div className="w-11/12 m-2 rounded-xl p-3 flex justify-between items-center border-2 border-slate-600 dark:bg-gray-700">
@@ -26,7 +26,7 @@ export default function Header(){
                 loading?
                 <BeatLoader color="gray" />
                 :
-                <img className="w-12 border-2 rounded-full dark:border-white border-slate-600" src={user.photoURL??`https://robohash.org/${user.email}`} />
+                <img src={user.photoURL??`https://robohash.org/${user.email}`} className="w-12 border-2 rounded-full dark:border-white border-slate-600" />
             }
         </div>
     )
