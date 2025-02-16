@@ -11,8 +11,19 @@ export const TaskSuggestion = () => {
 
     const fetchData = async(pos)=>{
         const data = await getWeather(pos.coords.latitude,pos.coords.longitude);
-        const suggestion = await getSuggestion(data.current.condition.text,data.current.condition.temp_c);
-        setSuggestion(suggestion.content)
+        const existingSuggestion = JSON.parse(localStorage.getItem('suggestion'));
+        if(existingSuggestion && existingSuggestion.date===new Date().getDate()){
+            setSuggestion(existingSuggestion);
+        }
+        else{
+            const suggestion = await getSuggestion(data.current.condition.text,data.current.condition.temp_c);
+            setSuggestion(suggestion.content)
+            const todaysSuggestion = {
+                suggestion:suggestion.content,
+                date:new Date().getDate()
+            }
+            localStorage.setItem('suggestion',todaysSuggestion)
+        }
         setLoading(false);
     }
 

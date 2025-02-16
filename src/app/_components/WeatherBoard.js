@@ -27,12 +27,12 @@ export default function WeatherBoard(){
         }
     },[])
     return(
-        <div className="bg-gray-700 rounded-lg p-4 w-full shadow-lg shadow-black">
+        <div className="bg-gray-700 rounded-lg flex justify-center items-center p-4 w-full shadow-lg shadow-black">
             {
                 !weatherData?
                 <BeatLoader color="gray" />
                 :
-                <div className="flex justify-evenly items-center">
+                <div className="w-full flex justify-evenly items-center">
                     <div className="flex flex-col justify-center items-center">
                         <img className="w-full" src={weatherData.current.condition.icon} />
                     </div>
