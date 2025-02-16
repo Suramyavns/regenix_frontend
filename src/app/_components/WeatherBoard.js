@@ -13,9 +13,7 @@ export default function WeatherBoard(){
     const getWeatherData = async(position) => {
         const data = await getWeather(position.coords.latitude,position.coords.longitude);
         setWeatherData(data);
-        setLoading(false);
-        console.log(data);
-              
+        setLoading(false);              
     }
     useEffect(()=>{
         if(navigator.geolocation){

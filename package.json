@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@huggingface/inference": "^3.3.4",
     "appwrite": "^17.0.0",
     "firebase": "^11.3.0",
     "next": "15.1.7",

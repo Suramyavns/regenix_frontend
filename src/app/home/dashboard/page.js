@@ -7,18 +7,12 @@ import { GridLoader } from "react-spinners";
 import WeatherBoard from "@/app/_components/WeatherBoard";
 import UserScore from "@/app/_components/UserScore";
 import AQIBoard from "@/app/_components/AQIBoard";
+import { TaskSuggestion } from "@/app/_components/Suggestion";
 
 export default function Page() {
     const router = useRouter()
     const [loading,setLoading]=useState(true);
     const [user,setUser]=useState(auth.currentUser);
-    const handleLogout = () => {
-        signOut(auth)
-        .then(()=>{
-            router.replace('/')
-        })
-        .catch((e)=>{alert(e)})
-    }
 
     useEffect(()=>{
         const user = JSON.parse(localStorage.getItem('user'))||auth.currentUser
@@ -29,7 +23,7 @@ export default function Page() {
     },[])
 
     return (
-        <div className="h-full w-full flex flex-col justify-center items-center">
+        <div className="h-full mb-4 w-full flex flex-col justify-center items-center">
             {
                 loading?
                 <GridLoader color="gray" />
@@ -40,8 +34,7 @@ export default function Page() {
                         <UserScore />
                         <AQIBoard />
                     </div>
-                    <p>wilkommen {user?.displayName.toString() || user?.email.toString()}</p>
-                    <button onClick={handleLogout} className="w-4/5 text-2xl p-2 bg-gray-700 rounded-xl">Logout</button>
+                    <TaskSuggestion />
                 </div>
             }
         </div>

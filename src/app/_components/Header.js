@@ -1,27 +1,25 @@
 'use client'
 import { useEffect, useState } from "react"
 import { auth } from "../../../Firebase"
-import { redirect } from "next/navigation";
-import { BiMenu } from "react-icons/bi";
+import { redirect, usePathname } from "next/navigation";
 import { BeatLoader } from "react-spinners";
 
 export default function Header(){
+    const [title,setTitle]=useState(usePathname());
     const [loading,setLoading]=useState(true);
     const [user,setUser]=useState(auth.currentUser);
-    useEffect(() => {
-        const user = auth.currentUser;
+    useEffect(()=>{
+        const user = JSON.parse(localStorage.getItem('user'))||auth.currentUser
         if(user){
-            setUser(user);            
+            setUser(user);
             setLoading(false);
         }
-        else{redirect('/')}        
     },[])
     return(
         <div className="w-11/12 m-2 rounded-xl p-3 flex justify-between items-center border-2 border-slate-600 dark:bg-gray-700">
-            <button>
-                <BiMenu className="text-slate-600 dark:text-yellow-50 rounded-full" size={40}/>
-            </button>
-            <p className="text-2xl font-semibold">Regenix</p>
+            <p className="text-2xl font-semibold">
+                {title.slice(6,title.length).toLocaleUpperCase()}
+            </p>
             {
                 loading?
                 <BeatLoader color="gray" />
