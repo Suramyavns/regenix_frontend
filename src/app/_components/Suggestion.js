@@ -17,11 +17,11 @@ export const TaskSuggestion = () => {
         }
         else{
             const suggestion = await getSuggestion(data.current.condition.text,data.current.condition.temp_c);
-            setSuggestion(suggestion.content)
             const todaysSuggestion = {
                 suggestion:suggestion.content,
                 date:new Date().getDate()
             }
+            setSuggestion(todaysSuggestion)
             localStorage.setItem('suggestion',JSON.stringify(todaysSuggestion))
         }
         setLoading(false);
@@ -39,7 +39,7 @@ export const TaskSuggestion = () => {
         }
     },[])
     return(
-        <div className="w-full rounded-xl p-3 h-fit bg-slate-600">
+        <div className="shadow-box w-full rounded-xl p-3 h-fit bg-slate-600">
             <p className="opacity-80">Today's Suggestion</p>
             {
                 loading?
@@ -48,7 +48,7 @@ export const TaskSuggestion = () => {
                 </div>
                 :
                 <div className="p-2 h-full flex flex-col items-center gap-4">
-                    <p className="text-lg">{suggestion}</p>
+                    <p className="text-lg">{suggestion.suggestion}</p>
                     <button className="w-full p-2 text-xl flex justify-center items-center rounded-lg bg-slate-800">
                         Inspect
                     </button>

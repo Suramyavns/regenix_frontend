@@ -29,8 +29,7 @@ body {
 }
 
 .shadow-box{
-  box-shadow: 1px 1px 20px 1px;
-  @apply dark:shadow-gray-400 shadow-slate-400
+  @apply shadow-black shadow-lg
 }
 
 input{
