@@ -39,7 +39,7 @@ export const TaskSuggestion = () => {
         }
     },[])
     return(
-        <div className="shadow-box w-full rounded-xl p-3 h-fit bg-slate-600">
+        <div className="shadow-box w-full rounded-xl p-3 h-fit bg-orange-100 dark:bg-slate-600">
             <p className="opacity-80">Today's Suggestion</p>
             {
                 loading?

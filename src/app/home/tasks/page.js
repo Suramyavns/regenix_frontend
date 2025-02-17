@@ -45,7 +45,7 @@ export default function Page() {
                     tasks.filter((task)=>task.status===0)
                     .map((ongoingTask,index)=>{
                         return(
-                            <div className="w-full shadow-box flex justify-between items-center bg-gray-700 p-3 text-xl rounded-lg" key={index}>
+                            <div className="w-full shadow-box flex justify-between items-center bg-white dark:bg-gray-700 p-3 text-xl rounded-lg" key={index}>
                                 <p className="font-semibold">{ongoingTask.title}</p>
                                 <button onClick={()=>{handleInspect(index)}} className="bg-gray-800 p-2 rounded-md font-bold">
                                     Inspect
@@ -61,18 +61,18 @@ export default function Page() {
                     tasks.filter((task)=>task.status===1)
                     .map((completedTask,index)=>{
                         return(
-                            <div className="w-full shadow-box flex-wrap flex justify-between items-center bg-gray-700 p-3 text-xl rounded-lg" key={index}>
+                            <div className="w-full shadow-box flex-wrap flex justify-between items-center bg-white dark:bg-gray-700 p-3 text-xl rounded-lg" key={index}>
                                 <p className="font-semibold">{completedTask.title}</p>
                                 <div className="flex items-center gap-4">
                                     <FaMedal size={32} color={completedTask.medal} />
                                     {
                                         extending===index?
                                         <button onClick={()=>{setExtending(null)}}>
-                                            <FaCaretSquareUp className="text-gray-200" size={32} />
+                                            <FaCaretSquareUp className="text-slate-500 dark:text-gray-200" size={32} />
                                         </button>
                                         :
                                         <button onClick={()=>{setExtending(index)}}>
-                                            <FaCaretSquareDown className="text-gray-200" size={32} />
+                                            <FaCaretSquareDown className="text-slate-500 dark:text-gray-200" size={32} />
                                         </button>
                                     }
                                 </div>

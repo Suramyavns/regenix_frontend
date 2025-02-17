@@ -27,7 +27,7 @@ export default function WeatherBoard(){
         }
     },[])
     return(
-        <div className="bg-gray-700 rounded-lg flex justify-center items-center p-4 w-full shadow-lg shadow-black">
+        <div className="bg-orange-100 dark:bg-gray-700 rounded-lg flex justify-center items-center p-4 w-full shadow-box">
             {
                 !weatherData?
                 <BeatLoader color="gray" />

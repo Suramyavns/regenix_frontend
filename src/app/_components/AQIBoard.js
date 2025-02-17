@@ -19,7 +19,7 @@ export default function AQIBoard(){
 
     return(
         <div
-        className="w-1/3 aspect-square rounded-full p-2 flex flex-col justify-center items-center bg-slate-600 shadow-black shadow-lg">
+        className="w-1/3 aspect-square rounded-full p-2 flex flex-col justify-center items-center bg-slate-600 shadow-box">
             {
                 loading?
                 <BeatLoader color="gray" />
