@@ -5,11 +5,11 @@ import { getSuggestion } from "../_utils/nlp"
 import { BeatLoader } from "react-spinners"
 import { redirect, useRouter } from "next/navigation"
 import { auth, db } from "../../../Firebase"
-import { addDoc, collection, doc, setDoc } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore"
 
-export const TaskSuggestion = ({inspecting}) => {
+export const  TaskSuggestion = ({inspecting}) => {
 
-    const [suggestion, setSuggestion] = useState()
+    const [suggestion, setSuggestion] = useState(null)
     const [loading,setLoading]=useState(true);
     const router = useRouter();
 
@@ -30,6 +30,7 @@ export const TaskSuggestion = ({inspecting}) => {
             accepted:true
         }
         try {
+            setSuggestion(suggestion)
             localStorage.setItem('suggestion',JSON.stringify(suggestionData));
             const docRef = await addDoc(collection(db,'tasks'),suggestionData);
             router.replace('/home/tasks')
@@ -43,9 +44,12 @@ export const TaskSuggestion = ({inspecting}) => {
 
     const fetchData = async(pos)=>{
         const data = await getWeather(pos.coords.latitude,pos.coords.longitude);
-        const existingSuggestion = JSON.parse(localStorage.getItem('suggestion'));
-        if(existingSuggestion && existingSuggestion.date===new Date().toDateString()){
-            setSuggestion(existingSuggestion);
+        const userId = JSON.parse(localStorage.getItem('user')).uid;
+        const q = query(collection(db,'tasks'),where('date','==',new Date().toDateString()),where("user","==",userId))
+        const filteredTasks = (await getDocs(q)).docs;
+
+        if(filteredTasks && filteredTasks.length && filteredTasks[0].data().date===new Date().toDateString()){
+            setSuggestion(filteredTasks[0].data());
         }
         else{
             const suggestion = await getSuggestion(data.current.condition.text,data.current.condition.temp_c);
@@ -63,7 +67,9 @@ export const TaskSuggestion = ({inspecting}) => {
     useEffect(()=>{
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition((position)=>{
-                fetchData(position);
+                if(!suggestion){
+                    fetchData(position);
+                }
             });
         }
         else{
@@ -81,21 +87,21 @@ export const TaskSuggestion = ({inspecting}) => {
                 </div>
                 :
                 <div className="p-2 h-full flex flex-col items-center gap-4">
-                    <p className="text-lg">{suggestion.suggestion}</p>
+                    <p className="text-lg">{suggestion.suggestion||suggestion.description}</p>
                     <p className="text-sm opacity-80 text-right w-full">As on {suggestion.date}</p>
                     {
                         inspecting?
                         <>
                         {
                             suggestion.title && suggestion.title.length>0?
+                            <button className="w-full p-2 text-xl flex justify-center items-center rounded-lg bg-slate-800">
+                                Submit Review
+                            </button>
+                            :
                             <div className="grid grid-cols-2 text-lg font-semibold w-full gap-2">
                                 <button onClick={handleAccept} className="bg-green-500 rounded-lg p-2">Accept</button>
                                 <button className="bg-blue-500 p-2 rounded-lg">Personalize</button>
                             </div>
-                            :
-                            <button className="w-full p-2 text-xl flex justify-center items-center rounded-lg bg-slate-800">
-                                Submit Review
-                            </button>
                         }
                         </>
                         :
