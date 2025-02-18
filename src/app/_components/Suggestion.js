@@ -156,23 +156,34 @@ export const  TaskSuggestion = ({inspecting}) => {
                         {
                             suggestion.title && suggestion.title.length>0?
                             <>
-                            <input 
-                                type="file" 
-                                accept="image/*" 
-                                capture="environment" 
-                                onChange={handleFileChange} 
-                                className="hidden" 
-                            />
-                            <button className="text-xl font-semibold bg-blue-500 w-full p-2 rounded-lg" onClick={() => document.querySelector('input[type=file]').click()}>Capture/Upload Image</button>
-                            {image && <img src={image} alt="Preview" className="w-40 h-40 object-cover rounded-lg" />}
-                            <button onClick={handleReview} className="w-full font-semibold p-2 text-xl flex justify-center items-center rounded-lg bg-green-500">
-                                Submit Review
-                            </button>
                             {
-                                matches!==null &&
-                                <p className={`w-full text-xl p-2 rounded-xl font-bold ${matches?'bg-green-500':'bg-red-500'}`}>
-                                    {matches===true?"Congratulations! You've successfully completed this task!":"The uploaded image does not match the description"}
-                                </p>
+                                suggestion.medal && suggestion.medal.length>0?
+                                <>
+                                    <p className="w-full bg-gray-900 text-center text-xl p-2 rounded-xl font-bold">You have successfully implemented this task!</p>
+                                    <a className="underline" href="/home/tasks">See Task list</a>
+                                </>
+                                :
+                                <>
+                                    <input 
+                                        type="file" 
+                                        accept="image/*" 
+                                        capture="environment" 
+                                        onChange={handleFileChange} 
+                                        className="hidden" 
+                                    />
+                                    <button className="text-xl font-semibold bg-blue-500 w-full p-2 rounded-lg" onClick={() => document.querySelector('input[type=file]').click()}>Capture/Upload Image</button>
+                                    {image && <img src={image} alt="Preview" className="w-40 h-40 object-cover rounded-lg" />}
+                                    <button onClick={handleReview} className="w-full font-semibold p-2 text-xl flex justify-center items-center rounded-lg bg-green-500">
+                                        Submit Review
+                                    </button>
+                                    {
+                                        matches!==null &&
+                                        <p className={`w-full text-xl p-2 rounded-xl font-bold ${matches?'bg-green-500':'bg-red-500'}`}>
+                                            {matches===true?"Congratulations! You've successfully completed this task!":"The uploaded image does not match the description"}
+                                        </p>
+                                    }
+                                </>
+                                
                             }
                             </>
                             :
