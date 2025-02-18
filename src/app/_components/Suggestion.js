@@ -71,16 +71,17 @@ export const  TaskSuggestion = ({inspecting}) => {
         const formData = new FormData();
         formData.append('image', file);
         formData.append('description', suggestion.description);
-        
+        setLoading(true);
         try {
           const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/process`, {
             method: 'POST',
             body: formData,
           });
+          console.log(response);
+          
           const result = await response.json();
           if(result.match){
             setMatches(true);
-            setLoading(true)
             const timeTaken = Math.abs(new Date()-new Date(suggestion.date))
             const daysTaken = Math.floor(timeTaken/(1000*60*60*24));
             const userId = JSON.parse(localStorage.getItem('user')).uid;
@@ -92,7 +93,6 @@ export const  TaskSuggestion = ({inspecting}) => {
                 status:true,
                 medal:getMedal(daysTaken)
             })
-            setLoading(false);
             router.replace('/home/tasks/')
           }
           else{
@@ -101,6 +101,7 @@ export const  TaskSuggestion = ({inspecting}) => {
         } catch (error) {
           console.error('Error:', error);
         }
+        finally{setLoading(false)}
       };
 
     const fetchData = async(pos)=>{
