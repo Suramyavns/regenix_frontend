@@ -5,12 +5,15 @@ import { getSuggestion } from "../_utils/nlp"
 import { BeatLoader } from "react-spinners"
 import { redirect, useRouter } from "next/navigation"
 import { auth, db } from "../../../Firebase"
-import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore"
 
 export const  TaskSuggestion = ({inspecting}) => {
 
     const [suggestion, setSuggestion] = useState(null)
     const [loading,setLoading]=useState(true);
+    const [file, setFile] = useState(null);
+    const [image,setImage]=useState(null);
+    const [matches,setMatches]=useState(null);
     const router = useRouter();
 
     const setInspectingTask = () => {
@@ -41,6 +44,64 @@ export const  TaskSuggestion = ({inspecting}) => {
             setLoading(false);
         }
     }
+
+    const handleFileChange = (event) => {
+        setMatches(null);
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+          setImage(URL.createObjectURL(selectedFile));
+          setFile(selectedFile);
+        }
+      };
+
+      const getMedal = (numDays) => {
+        if(numDays<=1){
+            return 'gold';
+        }
+        else if(numDays<=7){
+            return 'silver'
+        }
+        else{
+            return 'bronze'
+        }
+      }
+    
+      const handleReview = async () => {
+        if (!file || !suggestion) return;
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('description', suggestion.description);
+        
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/process`, {
+            method: 'POST',
+            body: formData,
+          });
+          const result = await response.json();
+          if(result.match){
+            setMatches(true);
+            setLoading(true)
+            const timeTaken = Math.abs(new Date()-new Date(suggestion.date))
+            const daysTaken = Math.floor(timeTaken/(1000*60*60*24));
+            const userId = JSON.parse(localStorage.getItem('user')).uid;
+            const q = query(collection(db,'tasks'),where('date','==',new Date().toDateString()),where("user","==",userId))
+            const filteredTasks = (await getDocs(q)).docs;
+            const todaysTaskRef = filteredTasks[0].ref;
+            await updateDoc(todaysTaskRef,{
+                ...suggestion,
+                status:true,
+                medal:getMedal(daysTaken)
+            })
+            setLoading(false);
+            router.replace('/home/tasks/')
+          }
+          else{
+            setMatches(false);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
 
     const fetchData = async(pos)=>{
         const data = await getWeather(pos.coords.latitude,pos.coords.longitude);
@@ -94,9 +155,26 @@ export const  TaskSuggestion = ({inspecting}) => {
                         <>
                         {
                             suggestion.title && suggestion.title.length>0?
-                            <button className="w-full p-2 text-xl flex justify-center items-center rounded-lg bg-slate-800">
+                            <>
+                            <input 
+                                type="file" 
+                                accept="image/*" 
+                                capture="environment" 
+                                onChange={handleFileChange} 
+                                className="hidden" 
+                            />
+                            <button className="text-xl font-semibold bg-blue-500 w-full p-2 rounded-lg" onClick={() => document.querySelector('input[type=file]').click()}>Capture/Upload Image</button>
+                            {image && <img src={image} alt="Preview" className="w-40 h-40 object-cover rounded-lg" />}
+                            <button onClick={handleReview} className="w-full font-semibold p-2 text-xl flex justify-center items-center rounded-lg bg-green-500">
                                 Submit Review
                             </button>
+                            {
+                                matches!==null &&
+                                <p className={`w-full text-xl p-2 rounded-xl font-bold ${matches?'bg-green-500':'bg-red-500'}`}>
+                                    {matches===true?"Congratulations! You've successfully completed this task!":"The uploaded image does not match the description"}
+                                </p>
+                            }
+                            </>
                             :
                             <div className="grid grid-cols-2 text-lg font-semibold w-full gap-2">
                                 <button onClick={handleAccept} className="bg-green-500 rounded-lg p-2">Accept</button>
