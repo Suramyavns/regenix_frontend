@@ -7,6 +7,7 @@ import { signOut } from "firebase/auth"
 export default function Page() {
     const router = useRouter()
     const handleLogout = () => {
+        sessionStorage.clear()
         localStorage.clear();
         signOut(auth)
         .then(()=>{

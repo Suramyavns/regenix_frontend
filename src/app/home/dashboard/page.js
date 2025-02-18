@@ -30,11 +30,11 @@ export default function Page() {
                 :
                 <div className="h-full py-4 gap-6 flex flex-col w-11/12 items-center">
                     <WeatherBoard />
-                    <div className="w-full flex justify-around">
+                    <div className="w-full sm:w-2/3 flex justify-around">
                         <UserScore />
                         <AQIBoard />
                     </div>
-                    <TaskSuggestion />
+                    <TaskSuggestion inspecting={false}/>
                 </div>
             }
         </div>

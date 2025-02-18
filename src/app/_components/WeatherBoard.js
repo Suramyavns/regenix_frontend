@@ -23,11 +23,10 @@ export default function WeatherBoard(){
         }
         else{
             alert("Provide location to continue");
-            redirect('/')
         }
     },[])
     return(
-        <div className="bg-orange-100 dark:bg-gray-700 rounded-lg flex justify-center items-center p-4 w-full shadow-box">
+        <div className="bg-orange-100 dark:bg-gray-700 rounded-lg flex justify-center items-center p-4 w-full sm:w-2/3 shadow-box">
             {
                 !weatherData?
                 <BeatLoader color="gray" />
