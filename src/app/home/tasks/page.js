@@ -57,7 +57,7 @@ export default function Page() {
                         .map((ongoingTask,index)=>{
                             return(
                                 <div className="w-full shadow-box flex justify-between items-center bg-white dark:bg-gray-700 p-3 text-xl rounded-lg" key={index}>
-                                    <p className="font-semibold">{ongoingTask.title}</p>
+                                    <p className="font-semibold">{ongoingTask.description.slice(0,20)}...</p>
                                     <button onClick={()=>{handleInspect(index)}} className="bg-gray-800 p-2 rounded-md font-bold">
                                         Inspect
                                     </button>
@@ -73,7 +73,7 @@ export default function Page() {
                         .map((completedTask,index)=>{
                             return(
                                 <div className="w-full shadow-box flex-wrap flex justify-between items-center bg-white dark:bg-gray-700 p-3 text-xl rounded-lg" key={index}>
-                                    <p className="font-semibold">{completedTask.title}</p>
+                                    <p className="font-semibold">{completedTask.description.slice(0,20)}...</p>
                                     <div className="flex items-center gap-4">
                                         <FaMedal size={32} color={completedTask.medal} />
                                         {

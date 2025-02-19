@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { auth } from '../../../Firebase';
 import { GridLoader } from 'react-spinners';
+import { addDoc,collection } from 'firebase/firestore';
+import { db } from '../../../Firebase';
 
 const LoginForm = () => {
     const router = useRouter();
@@ -25,6 +27,7 @@ const LoginForm = () => {
 
             const userCreds = await signInWithEmailAndPassword(auth, email, password);
             if (userCreds.user) {
+                makeUserScore(userCreds.user.uid);
                 router.replace('/');
             }
         } catch (error) {
@@ -44,6 +47,17 @@ const LoginForm = () => {
         }
     };
 
+    const makeUserScore = async(uid) => {
+        const data = {
+            score:650,
+            userid:uid
+        }
+        const docRef = await addDoc(collection(db,'scores'),data);
+        if(docRef){
+            return;
+        }
+    }
+
     // Handle Google sign-in
     const handleGoogleLogin = async () => {
         setError('');
@@ -58,6 +72,7 @@ const LoginForm = () => {
             const result = await signInWithPopup(auth, provider);
             
             if (result.user) {
+                makeUserScore(result.user.uid)
                 router.replace('/');
             }
         } catch (error) {

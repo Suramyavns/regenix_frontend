@@ -54,6 +54,21 @@ export const  TaskSuggestion = ({inspecting}) => {
         }
       };
 
+      const getScore = (numDays) => {
+        if(numDays<=1){
+            return 20;
+        }
+        else if(numDays<=7){
+            return 12
+        }
+        else if(numDays<=31){
+            return 8;
+        }
+        else{
+            return -5;
+        }
+      }
+
       const getMedal = (numDays) => {
         if(numDays<=1){
             return 'gold';
@@ -92,6 +107,13 @@ export const  TaskSuggestion = ({inspecting}) => {
                 ...suggestion,
                 status:true,
                 medal:getMedal(daysTaken)
+            })
+            const q2 = query(collection(db,'scores'),where('userid','==',userId));
+            const scores = (await getDocs(q2)).docs;
+            const userScore = scores[0].ref;
+            await updateDoc(userScore,{
+                ...scores[0].data(),
+                score:scores[0].data().score+getScore(daysTaken)
             })
             router.replace('/home/tasks/')
           }
