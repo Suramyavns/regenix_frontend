@@ -2,7 +2,22 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+Run the [backend]() server on your machine and edit your .env for this project like this
+```
+NEXT_PUBLIC_APIKEY=<your-firebase-api-key>
+NEXT_PUBLIC_AUTHDOMAIN=<your-firebase-auth-domain>
+NEXT_PUBLIC_PROJECTID=<your-firebase-project-id>
+NEXT_PUBLIC_STORAGEBUCKET=<your-firebase-storage-bucket>
+NEXT_PUBLIC_MESSAGINGSENDERID=<your-firebase-messaging-id>
+NEXT_PUBLIC_APPID=<your-firebase-app-id>
+NEXT_PUBLIC_MEASUREMENTID=<your-firebase-measurement-id>
+NEXT_PUBLIC_WEATHER_API=<weather-data-api>
+NEXT_PUBLIC_AQI_API=<aqi-data-api>
+NEXT_PUBLIC_NLP_API=<huggingface-nlp-token>
+NEXT_PUBLIC_BACKEND_URL=<backend-url>
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
