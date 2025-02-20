@@ -22,7 +22,7 @@ export default function Page() {
     }
 
     useEffect(()=>{
-        const user = auth.currentUser;
+        const user = JSON.parse(localStorage.getItem('user'))||auth.currentUser
         if(user){
             setUser(user);
             fetchUserTask(user);
