@@ -11,7 +11,7 @@ export default function UserScore(){
         const user = JSON.parse(localStorage.getItem('user'));
         const q = query(collection(db,'scores'),where('userid','==',user.uid));
         const querySnapshot = await getDocs(q);
-        setUserScore(querySnapshot.docs[0].data().score);
+        setUserScore(querySnapshot.docs.length>0?querySnapshot.docs[0].data().score:650);
     }
 
     useEffect(()=>{

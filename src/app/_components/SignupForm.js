@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { auth } from '../../../Firebase';
 import { GridLoader } from 'react-spinners';
-import { addDoc,collection, getDoc, query, where } from 'firebase/firestore';
+import { addDoc,collection, doc, getDoc, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../../Firebase';
 
 const SignupForm = () => {
@@ -50,15 +50,14 @@ const SignupForm = () => {
             score:650,
             userid:uid
         }
-        const previousScoreRef = query(collection(db,'scores'),where('userid','==',uid));
-        if(previousScoreRef){
+        const previousScoreRef = doc(db,'scores',uid);
+        const userScoreSnap = await getDoc(previousScoreRef);
+
+        if(userScoreSnap.exists()){
             return;
         }
         else{
-            const docRef = await addDoc(collection(db,'scores'),data);
-            if(docRef){
-                return;
-            }
+            const docRef = await setDoc(previousScoreRef,data);
         }
     }
 
