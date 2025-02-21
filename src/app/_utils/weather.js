@@ -17,19 +17,19 @@ export const getAQI = async()=>{
 }
 
 export const getAQIColor = (aqi) => {
-    if(aqi<50){
+    if(aqi<10){
         return 'yellowgreen'
     }
-    else if(aqi<100){
+    else if(aqi<50){
         return 'lightgreen'
     }
-    else if(aqi<200){
+    else if(aqi<80){
         return 'yellow'
     }
-    else if(aqi<300){
+    else if(aqi<100){
         return 'orange'
     }
-    else if(aqi<400){
+    else if(aqi<180){
         return 'red'
     }
     else{
