@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react"
-import { getAQI,getAQIColor } from "../_utils/weather";
+import { getAQI,getAQIColor } from "./_utils/weather";
 import { BeatLoader } from "react-spinners";
 export default function AQIBoard(){
     const [aqiColor,setColor] = useState()

@@ -1,7 +1,7 @@
 'use client'
 import { redirect } from "next/dist/server/api-utils";
 import { useEffect, useState } from "react";
-import { getWeather } from "../_utils/weather";
+import { getWeather } from "./_utils/weather";
 import { BeatLoader } from "react-spinners";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaWind } from "react-icons/fa";

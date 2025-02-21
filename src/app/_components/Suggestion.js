@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react"
-import { getWeather } from "../_utils/weather"
-import { getSuggestion } from "../_utils/nlp"
+import { getWeather } from "./_utils/weather"
+import { getSuggestion } from "./_utils/nlp"
 import { BeatLoader } from "react-spinners"
 import { redirect, useRouter } from "next/navigation"
 import { auth, db } from "../../../Firebase"
