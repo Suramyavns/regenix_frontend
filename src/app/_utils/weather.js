@@ -29,10 +29,10 @@ export const getAQIColor = (aqi) => {
     else if(aqi<100){
         return 'orange'
     }
-    else if(aqi<180){
+    else if(aqi<200){
         return 'red'
     }
     else{
-        return 'redviolet'
+        return 'darkred'
     }
 }

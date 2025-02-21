@@ -43,6 +43,8 @@ export default function Page() {
                             <p className="text-lg">A sustainable guidance app created for India Gateway Project 2024-25 @Christ University, Banglore</p>
                             <a className="text-lg underline" href="https://www.christuniversity.in">Christ University Website</a>
                             <a className="text-lg underline" href="https://www.thws.de">THWS Website</a>
+                            <p className="text-xl font-bold py-4">Development Team</p>
+                            <img src="/images/team.png" />
                         </div>
                     }
                 </div>
