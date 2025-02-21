@@ -41,7 +41,8 @@ export default function Page() {
                         extending && extending===1 && 
                         <div className="w-full p-2 text-left">
                             <p className="text-lg">A sustainable guidance app created for India Gateway Project 2024-25 @Christ University, Banglore</p>
-                            <a className="text-lg underline" href="https://www.christuniversity.in">University Website</a>
+                            <a className="text-lg underline" href="https://www.christuniversity.in">Christ University Website</a>
+                            <a className="text-lg underline" href="https://www.thws.de">THWS Website</a>
                         </div>
                     }
                 </div>
