@@ -1,5 +1,5 @@
 'use client'
-import { TaskSuggestion } from "@/app/_components/Suggestion";
+import { TaskSuggestion } from "../../../_components/Suggestion";
 import { useEffect, useState } from "react";
 import { GridLoader } from "react-spinners";
 

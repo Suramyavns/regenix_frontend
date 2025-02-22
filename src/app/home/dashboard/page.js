@@ -4,10 +4,10 @@ import { auth } from "../../../../Firebase";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { GridLoader } from "react-spinners";
-import WeatherBoard from "@/app/_components/WeatherBoard";
-import UserScore from "@/app/_components/UserScore";
-import AQIBoard from "@/app/_components/AQIBoard";
-import { TaskSuggestion } from "@/app/_components/Suggestion";
+import WeatherBoard from "../../_components/WeatherBoard";
+import UserScore from "../../_components/UserScore";
+import AQIBoard from "../../_components/AQIBoard";
+import { TaskSuggestion } from "../../_components/Suggestion";
 
 export default function Page() {
     const router = useRouter()

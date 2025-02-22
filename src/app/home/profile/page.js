@@ -3,8 +3,8 @@ import { useState,useEffect } from "react";
 import { auth, db } from "../../../../Firebase";
 import { BeatLoader, GridLoader } from "react-spinners";
 import { IoMail } from "react-icons/io5";
-import UserScore from "@/app/_components/UserScore";
-import TaskCount from "@/app/_components/TaskCount";
+import UserScore from "../../_components/UserScore";
+import TaskCount from "../../_components/TaskCount";
 import { collection, where, getDocs, query } from "firebase/firestore";
 import { GoDotFill } from "react-icons/go";
 
