@@ -17,7 +17,6 @@ export const  TaskSuggestion = ({inspecting}) => {
     const router = useRouter();
 
     const setInspectingTask = () => {
-        sessionStorage.setItem('inspecting',JSON.stringify(suggestion))
         redirect('/home/tasks/inspect');
     }
 
@@ -136,11 +135,11 @@ export const  TaskSuggestion = ({inspecting}) => {
             setSuggestion(filteredTasks[0].data());
         }
         else{
-            const suggestion = await getSuggestion(data.current.condition.text,data.current.condition.temp_c);
+            const newSuggestionContent = await getSuggestion(data.current.condition.text,data.current.condition.temp_c);
             const dt = new Date();
             const todaysSuggestion = {
-                suggestion:suggestion.content,
-                date:dt.toDateString()
+                suggestion: newSuggestionContent.content,
+                date: dt.toDateString()
             }
             setSuggestion(todaysSuggestion)
             localStorage.setItem('suggestion',JSON.stringify(todaysSuggestion))
@@ -149,16 +148,24 @@ export const  TaskSuggestion = ({inspecting}) => {
     }
 
     useEffect(()=>{
-        if(navigator.geolocation){
-            navigator.geolocation.getCurrentPosition((position)=>{
-                if(!suggestion){
-                    fetchData(position);
-                }
-            });
+        const initialSuggestion = JSON.parse(localStorage.getItem('suggestion'))
+        console.log(initialSuggestion)
+        if(!initialSuggestion){
+            if(navigator.geolocation){
+                navigator.geolocation.getCurrentPosition((position)=>{
+                    if(!suggestion){
+                        fetchData(position);
+                    }
+                });
+            }
+            else{
+                alert("Provide location to continue");
+                redirect('/')
+            }
         }
         else{
-            alert("Provide location to continue");
-            redirect('/')
+            setSuggestion(initialSuggestion)
+            setLoading(false)
         }
     },[])
     return(
@@ -171,7 +178,7 @@ export const  TaskSuggestion = ({inspecting}) => {
                 </div>
                 :
                 <div className="p-2 h-full flex flex-col items-center gap-4">
-                    <p className="text-lg">{suggestion.suggestion||suggestion.description}</p>
+                    <p className="text-lg text-left w-full">{suggestion.suggestion||suggestion.description}</p>
                     <p className="text-sm opacity-80 text-right w-full">As on {suggestion.date}</p>
                     {
                         inspecting?
